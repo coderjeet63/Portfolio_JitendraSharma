@@ -123,7 +123,7 @@ const AboutPage = () => {
           <br />
           I'm constantly learning, exploring new technologies, and solving real-world problems through code.
           Let’s build something great together!
-          <ResumeButton href="/JITENDRA_SHARMA.pdf" download>
+          <ResumeButton href="/CV_Jitendra.pdf" download>
             📄 Download Resume
           </ResumeButton>
         </Main>
