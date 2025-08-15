@@ -26,7 +26,7 @@ export const Work = [
   description: "A full-stack car service platform with user authentication, admin and mechanic dashboards, order tracking, and Stripe payment integration. Designed to work seamlessly across all devices.",
   tags: ["react", "nodejs", "express", "mongodb", "jwt", "stripe"],
         
-       // demo:"http://devto-clone-codebucks27.vercel.app/",
+         demo:"https://checkmycar-frontend.onrender.com/",
         github:"https://github.com/coderjeet63/CheckMyCar.git"
     },
     {
@@ -40,16 +40,15 @@ export const Work = [
         github:"https://github.com/coderjeet63/Ai_Code_Reviewer.git"
        
     },
-    // {
-    //     id:5,
-    //     name:"Todo App(React + Redux)",
-    //     description:"A todo app build using Redux-toolkit and framer-motion for smooth animations.",
-    //     tags:["react","redux","framer-motion"],
-        
-    //     demo:"http://react-redux-todo-app-git-main-codebucks27.vercel.app/",
-    //     github:"https://github.com/codebucks27/React-Redux-Todo-App"
-        
-    // },
+   {
+    id: 5,
+    name: "DebateWithAI - AI Debate Platform",
+    description: "An innovative AI-powered debate platform built with the MERN Stack, integrating Hugging Face's HuBERT Large Model for emotion analysis and Google Gemini Pro for intelligent, context-aware debates. Features include voice input, real-time text editing, dynamic debate interface, dark/light mode, and a responsive UI with smooth animations.",
+    tags: ["mern", "huggingface", "google-gemini", "tailwindcss", "redux", "framer-motion", "speech-recognition", "emotion-analysis"],
+   // demo: "https://your-demo-link.com",
+    github: "https://github.com/coderjeet63/debatewithai.git"
+}
+,
     // {
     //     id:5,
     //     name:"Responsive Navigation Menu",
