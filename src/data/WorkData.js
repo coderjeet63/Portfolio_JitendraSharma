@@ -29,14 +29,15 @@ export const Work = [
          demo:"https://checkmycar-frontend.onrender.com/",
         github:"https://github.com/coderjeet63/CheckMyCar.git"
     },
-     {
-    id: 4,
-    name: "Clothence",
-    description: "A modern e-commerce platform for clothing with user-friendly product browsing, cart management, and account features. Fully responsive design ensures a seamless experience across devices. Backend integration for payments is coming soon — stay tuned!",
-    tags: ["react", "nodejs", "express", "mongodb", "redux", "tailwindcss"],
-    demo: "https://clothence-frontend.onrender.com/",
-    github: "https://github.com/coderjeet63/Clothence"
+   {
+  id: 4,
+  name: "Clothence",
+  description: "A full-stack e-commerce platform for clothing with user accounts, admin & order dashboards, cart management, and upcoming Stripe payments. Fully responsive across all devices.",
+  tags: ["react", "nodejs", "express", "mongodb", "redux", "tailwindcss"],
+  demo: "https://clothence-frontend.onrender.com/",
+  github: "https://github.com/coderjeet63/Clothence"
 }
+
 ,
  {
     id: 5,
