@@ -40,7 +40,7 @@ font-weight: bold;
 const WORK = styled(NavLink)`
 color: ${props => (props.click ? '#fff' : '#000')};
 position: absolute;
-top: 50%;
+top: 45%;
 left: calc(1rem + 2vw);
 transform: translate(-50%, -50%) rotate(-90deg);
 text-decoration: none;
@@ -60,7 +60,7 @@ justify-content: space-evenly;
 `
 
 const ABOUT = styled(NavLink)`
-  color: ${(props) => (props.click ? '#FFD700' : '#FFD700')}; /* gold color for visibility */
+  color: ${(props) => (props.click ? '#808080' : '#808080')}; /* gold color for visibility */
   text-decoration: underline;
   z-index: 1;
   font-size: 2rem;

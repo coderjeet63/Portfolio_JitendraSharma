@@ -29,8 +29,26 @@ export const Work = [
          demo:"https://checkmycar-frontend.onrender.com/",
         github:"https://github.com/coderjeet63/CheckMyCar.git"
     },
+     {
+    id: 4,
+    name: "Clothence",
+    description: "A modern e-commerce platform for clothing with user-friendly product browsing, cart management, and account features. Fully responsive design ensures a seamless experience across devices. Backend integration for payments is coming soon — stay tuned!",
+    tags: ["react", "nodejs", "express", "mongodb", "redux", "tailwindcss"],
+    demo: "https://clothence-frontend.onrender.com/",
+    github: "https://github.com/coderjeet63/Clothence"
+}
+,
+ {
+    id: 5,
+    name: "DebateWithAI",
+    description: "An AI-powered debate platform with voice input, real-time text editing, and emotion analysis using Hugging Face HuBERT. Integrated with Google Gemini Pro for smart, context-aware debates. Features a responsive UI with dark/light mode and smooth animations.",
+    github: "https://github.com/coderjeet63/debatewithai.git",
+     tags: ["react", "mern", "ai", "voice", "huggingface"],
+
+}
+,
     {
-        id:4,
+        id:6,
         name: "Ai_Code_Reviewer",
   description: "An intelligent code review assistant built with React that provides real-time suggestions, code quality feedback, and bug detection using AI.",
   tags: ["react", "code-review", "MERN" , "ai",],
@@ -40,25 +58,5 @@ export const Work = [
         github:"https://github.com/coderjeet63/Ai_Code_Reviewer.git"
        
     },
-   {
-    id: 5,
-    name: "DebateWithAI - AI Debate Platform",
-    description: "An innovative AI-powered debate platform built with the MERN Stack, integrating Hugging Face's HuBERT Large Model for emotion analysis and Google Gemini Pro for intelligent, context-aware debates. Features include voice input, real-time text editing, dynamic debate interface, dark/light mode, and a responsive UI with smooth animations.",
-    tags: ["mern", "huggingface", "google-gemini", "tailwindcss", "redux", "framer-motion", "speech-recognition", "emotion-analysis"],
-   // demo: "https://your-demo-link.com",
-    github: "https://github.com/coderjeet63/debatewithai.git"
-}
-,
-    // {
-    //     id:5,
-    //     name:"Responsive Navigation Menu",
-    //     description:"A reponsive navbar menu component in ReactJS with react-router functionalities. Built from scratch.",
-    //     tags:["react","react-router","css"],
-        
-    //     demo:"http://react-responsive-navbar-codebucks27.vercel.app/",
-    //     github:"https://github.com/codebucks27/React-responsive-navbar"
-        
-    // },
     
-  
 ] 
