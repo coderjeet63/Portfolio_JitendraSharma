@@ -26,8 +26,8 @@ export const Work = [
   description: "A full-stack car service platform with user authentication, admin and mechanic dashboards, order tracking, and Stripe payment integration. Designed to work seamlessly across all devices.",
   tags: ["react", "nodejs", "express", "mongodb", "jwt", "stripe"],
         
-         demo:"https://checkmycar-frontend.onrender.com/",
-        github:"https://github.com/coderjeet63/CheckMyCar.git"
+       // demo:"https://checkmycar-frontend.onrender.com/",
+        github:"https://github.com/coderjeet63/Check_My_Car.git"
     },
    {
   id: 4,
