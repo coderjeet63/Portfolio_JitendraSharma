@@ -16,8 +16,8 @@ export const Work = [
   description: "A browser-based coding environment using WebContainer and React that lets users generate file structures, write code, and run projects with the help of an AI assistant.",
   tags: ["react", "webcontainer", "ai", "collaboration", "express"],
         
-        demo:"https://ai-agent-developer-1.onrender.com",
-        github:"https://github.com/coderjeet63/Ai_Agent_Developer.git"
+        demo:"https://ai-agent-for-developer-2.onrender.com",
+        github:"https://github.com/coderjeet63/Ai_Agent_For_Developer.git"
         
     },
     {
