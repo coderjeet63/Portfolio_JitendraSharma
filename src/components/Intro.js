@@ -25,6 +25,22 @@ const Box = styled(motion.div)`
   /* No heavy border — the two halves create the visual split */
   border: none;
   box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+
+  /* Tablet: keep the same desktop layout, just scale it down */
+  @media (max-width: 1024px) {
+    width: 78vw;
+    height: 52vh;
+  }
+
+  @media (max-width: 900px) {
+    width: 86vw;
+    height: 54vh;
+  }
+
+  /* Mobile uses the dedicated layout in Main.js */
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 // ── LEFT half of the card — sits on the dark side, so dark semi-transparent bg ──
@@ -46,6 +62,10 @@ const TextHalf = styled.div`
     width: 3px;
     background: linear-gradient(180deg, #7C6FFF, #00E5C3);
     border-radius: 2px;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 2.1rem 1.75rem;
   }
 `
 
@@ -86,6 +106,10 @@ const Bio = styled(motion.p)`
   line-height: 1.8;
   color: rgba(240,239,248,0.42);
   max-width: 300px;
+
+  @media (max-width: 1024px) {
+    max-width: 340px;
+  }
 `
 
 const TagRow = styled(motion.div)`
@@ -150,6 +174,10 @@ const ProfileImg = styled(motion.img)`
   object-position: bottom center;
   animation: ${floatY} 5s ease-in-out infinite;
   filter: drop-shadow(0 -8px 24px rgba(124,111,255,0.15));
+
+  @media (max-width: 1024px) {
+    height: 115%;
+  }
 `
 
 // ── Framer ─────────────────────────────────────────────────────────────
