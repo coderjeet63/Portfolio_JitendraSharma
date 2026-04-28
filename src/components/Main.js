@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion'
-import React, { useState } from 'react'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
+import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled, { keyframes } from 'styled-components'
 import LogoComponent from '../subComponents/LogoComponent'
@@ -8,258 +8,268 @@ import SocialIcons from '../subComponents/SocialIcons'
 import { YinYang } from './AllSvgs'
 import Intro from './Intro'
 
+const rotateAnim = keyframes`
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+`
+
+// ── Root: two-tone split exactly like the screenshot ──────────────────
+// Left ~50% = very dark navy, right ~50% = light pinkish-white gradient
 const MainContainer = styled.div`
-background: #0A0A0F;
-width: 100vw;
-height: 100vh;
-overflow:hidden;
-position: relative;
-
-&::before{
-  content:"";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.15;
-  filter: blur(120px);
-  background:
-    radial-gradient(600px 600px at 10% 12%, rgba(124,111,255,1) 0%, rgba(124,111,255,0) 60%),
-    radial-gradient(700px 700px at 88% 88%, rgba(0,229,195,1) 0%, rgba(0,229,195,0) 60%),
-    radial-gradient(650px 650px at 50% 28%, rgba(255,107,157,1) 0%, rgba(255,107,157,0) 60%);
-}
-
-h2,h3,h4,h5,h6{
-  font-family:'Syne', sans-serif ;
-  font-weight:500;
-}
-
-& > *{
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
   position: relative;
-  z-index: 1;
-}
 
-& > *::before{
+  /* Two-tone background split at 50vw */
+  background:
+    linear-gradient(to right,
+      #07091a 0%,
+      #07091a 50%,
+      #f5eef8 50%,
+      #eaf4fb 100%
+    );
+`
+
+// Purple/teal glow only on the LEFT dark half
+const LeftGlow = styled.div`
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
   z-index: 0;
-}
-
-/* Intro image side ambient background */
-& div > div:nth-child(2){
-  background: radial-gradient(circle at center, rgba(124,111,255,0.12) 0%, transparent 70%);
-}
+  background:
+    radial-gradient(ellipse 50% 60% at 2%  8%,  rgba(100,85,255,0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 25% 90%, rgba(0,210,180,0.10)  0%, transparent 60%);
 `
 
-const Container = styled.div`
-padding: 2rem;
+// Subtle dot-grid only on left half
+const GridOverlay = styled.div`
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(124,111,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,111,255,0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
 `
 
-const SKILLS = styled(NavLink)`
-color: rgba(240,239,248,0.5);
-position: absolute;
-top: 50%;
-right: calc(1rem + 2vw);
-transform: rotate(90deg) translate(-50%, -50%);
-text-decoration: none;
-z-index:3;
-font-family: 'Syne', sans-serif;
-font-size: 1.8rem;
-font-weight: 700;
-letter-spacing: 0.05em;
-transition: color 0.25s ease, text-shadow 0.25s ease;
-
-&:hover {
-  color: #a78bfa;
-  text-shadow:
-    0 0 10px rgba(167,139,250,0.9),
-    0 0 25px rgba(124,111,255,0.7),
-    0 0 50px rgba(124,111,255,0.4);
-}
+// All direct children sit above background layers
+const Layer = styled.div`
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 `
 
-const WORK = styled(NavLink)`
-color: rgba(240,239,248,0.5);
-position: absolute;
-top: 45%;
-left: calc(1rem + 2vw);
-transform: translate(-50%, -50%) rotate(-90deg);
-text-decoration: none;
-z-index:3;
-font-family: 'Syne', sans-serif;
-font-size: 1.8rem;
-font-weight: 700;
-letter-spacing: 0.05em;
-transition: color 0.25s ease, text-shadow 0.25s ease;
-
-&:hover {
-  color: #a78bfa;
-  text-shadow:
-    0 0 10px rgba(167,139,250,0.9),
-    0 0 25px rgba(124,111,255,0.7),
-    0 0 50px rgba(124,111,255,0.4);
-}
+// ── Side rotated nav labels — exact positions from screenshot ─────────
+const SideLink = styled(NavLink)`
+  position: absolute;
+  text-decoration: none;
+  font-family: 'Syne', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+  z-index: 4;
 `
 
+// "Work" — left edge, vertical, white text
+const WORK = styled(SideLink)`
+  top: 45%;
+  left: calc(1rem + 1vw);
+  transform: translate(-50%, -50%) rotate(-90deg);
+  color: rgba(255,255,255,0.85);
+
+  &:hover {
+    color: #a78bfa;
+    text-shadow: 0 0 16px rgba(167,139,250,0.8), 0 0 40px rgba(124,111,255,0.5);
+  }
+`
+
+// "Skills" — right edge, vertical, dark text (on light bg)
+const SKILLS = styled(SideLink)`
+  top: 50%;
+  right: calc(1rem + 1vw);
+  transform: rotate(90deg) translate(-50%, -50%);
+  color: rgba(30,20,60,0.55);
+
+  &:hover {
+    color: #7C6FFF;
+    text-shadow: 0 0 16px rgba(124,111,255,0.6);
+  }
+`
+
+// ── Bottom nav links ─────────────────────────────────────────────────
 const BottomBar = styled.div`
-position: absolute;
-bottom: 1rem;
-left: 0;
-right: 0;
-width: 100%;
-display: flex;
-justify-content: space-evenly;
+  position: absolute;
+  bottom: 1rem;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  z-index: 4;
 `
 
+// About = left side = white text
 const ABOUT = styled(NavLink)`
-  color: rgba(240,239,248,0.5);
+  color: rgba(255,255,255,0.55);
   text-decoration: none;
-  z-index: 3;
   font-family: 'Syne', sans-serif;
   font-size: 1.8rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
   transition: color 0.25s ease, text-shadow 0.25s ease;
-
   &:hover {
     color: #a78bfa;
-    text-shadow:
-      0 0 10px rgba(167,139,250,0.9),
-      0 0 25px rgba(124,111,255,0.7),
-      0 0 50px rgba(124,111,255,0.4);
+    text-shadow: 0 0 16px rgba(167,139,250,0.8);
   }
 `
 
+// Experience = right side = dark text
 const EXPERIENCE = styled(NavLink)`
-  color: rgba(240,239,248,0.5);
+  color: rgba(30,20,60,0.45);
   text-decoration: none;
-  z-index: 3;
   font-family: 'Syne', sans-serif;
   font-size: 1.8rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
   transition: color 0.25s ease, text-shadow 0.25s ease;
-
   &:hover {
-    color: #a78bfa;
-    text-shadow:
-      0 0 10px rgba(167,139,250,0.9),
-      0 0 25px rgba(124,111,255,0.7),
-      0 0 50px rgba(124,111,255,0.4);
+    color: #7C6FFF;
+    text-shadow: 0 0 16px rgba(124,111,255,0.5);
   }
 `
 
-const rotate = keyframes`
-from{
-    transform: rotate(0);
-}
-to{
-    transform: rotate(360deg);
-}
+// ── Yin-yang centre button ────────────────────────────────────────────
+const CenterBtn = styled.button`
+  position: absolute;
+  top:  ${p => p.click ? '88%' : '50%'};
+  left: ${p => p.click ? '93%' : '50%'};
+  transform: translate(-50%, -50%);
+  border: none; outline: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 5;
 `
 
-const Center = styled.button`
-position: absolute;
-top: ${props => props.click ? '85%' :'50%'};
-left: ${props => props.click ? '92%' :'50%'};
-transform: translate(-50%,-50%);
-border: none;
-outline: none;
-background-color: transparent;
-cursor: pointer;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-transition: all 1s ease;
-
-&>:first-child{
-    animation: ${rotate} infinite 1.5s linear;
-}
-
-&>:last-child{
-    display: ${props => props.click ? 'none' :'inline-block'};
-    padding-top: 1rem;
-}
+const SpinWrap = styled.div`
+  animation: ${rotateAnim} 3s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(100,80,220,0.5));
 `
 
-const DarkDiv = styled.div`
-position: absolute;
-top: 0;
-background: linear-gradient(135deg, #0A0A0F 0%, #1a1040 100%);
-bottom: 0;
-right: 50%;
-width: ${props => props.click ? '50%' : '0%'};
-height: ${props => props.click ? '100%' : '0%'};
-z-index:1;
-transition: height 0.5s ease, width 1s ease 0.5s;
+const ClickHint = styled.span`
+  display: ${p => p.hide ? 'none' : 'block'};
+  margin-top: 0.6rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.28);
+  font-family: 'Syne', sans-serif;
 `
 
+// ── Custom cursor ─────────────────────────────────────────────────────
+const CursorDot = styled(motion.div)`
+  position: fixed;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #a78bfa;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+`
+
+const CursorRing = styled(motion.div)`
+  position: fixed;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(167,139,250,0.45);
+  pointer-events: none;
+  z-index: 9998;
+`
+
+// ── Component ─────────────────────────────────────────────────────────
 const Main = () => {
-    const [click, setClick] = useState(true);
+  const [click, setClick] = useState(true)
 
-    const handleClick = () => setClick(!click);
+  const cx = useMotionValue(-100)
+  const cy = useMotionValue(-100)
+  const rx = useSpring(cx, { stiffness: 180, damping: 20 })
+  const ry = useSpring(cy, { stiffness: 180, damping: 20 })
 
-    return (
-        <MainContainer>
-         <DarkDiv click={click}/>
-            <Container>
-            <PowerButton />
-            <LogoComponent theme={click ? 'dark' :'light'}/>
-            <SocialIcons theme={click ? 'dark' :'light'} />
-           
-            <Center click={click}>
-                <YinYang onClick={()=> handleClick()} width={click ? 120 : 200} height={click ? 120 : 200} fill='currentColor' />
-                <span>click here</span>
-            </Center>
+  useEffect(() => {
+    const move = e => { cx.set(e.clientX - 4); cy.set(e.clientY - 4) }
+    window.addEventListener('mousemove', move)
+    return () => window.removeEventListener('mousemove', move)
+  }, [cx, cy])
 
-            <SKILLS to="/skills">
-                <motion.h2
-                initial={{ y:-200, transition: { type:'spring', duration: 1.5, delay:1} }}
-                animate={{ y:0, transition: { type:'spring', duration: 1.5, delay:1} }}
-                whileHover={{scale: 1.1}}
-                whileTap={{scale: 0.9}}
-                >
-                    Skills
-                </motion.h2>
-            </SKILLS>
+  const spring = (from, delay) => ({
+    initial: { y: from, opacity: 0 },
+    animate: { y: 0,    opacity: 1 },
+    transition: { type: 'spring', duration: 1.5, delay },
+  })
 
-            <WORK to="/work">
-                <motion.h2
-                initial={{ y:-200, transition: { type:'spring', duration: 1.5, delay:1} }}
-                animate={{ y:0, transition: { type:'spring', duration: 1.5, delay:1} }}
-                whileHover={{scale: 1.1}}
-                whileTap={{scale: 0.9}}
-                >
-                    Work
-                </motion.h2>
-            </WORK>
+  return (
+    <MainContainer>
+      {/* Background layers */}
+      <LeftGlow />
+      <GridOverlay />
 
-            <BottomBar>
-            <ABOUT to="/about">
-                <motion.h2
-                initial={{ y:200, transition: { type:'spring', duration: 1.5, delay:1} }}
-                animate={{ y:0, transition: { type:'spring', duration: 1.5, delay:1} }}
-                whileHover={{scale: 1.1}}
-                whileTap={{scale: 0.9}}
-                >
-                    About.
-                </motion.h2>
-            </ABOUT>
-            <EXPERIENCE to="/experience">
-                <motion.h2
-                initial={{ y:200, transition: { type:'spring', duration: 1.5, delay:1} }}
-                animate={{ y:0, transition: { type:'spring', duration: 1.5, delay:1} }}
-                whileHover={{scale: 1.1}}
-                whileTap={{scale: 0.9}}
-                >
-                    Experience.
-                </motion.h2>
-            </EXPERIENCE>
-            </BottomBar>
+      {/* Custom cursor */}
+      <CursorDot style={{ x: cx, y: cy }} />
+      <CursorRing style={{ x: rx, y: ry, translateX: '-11px', translateY: '-11px' }} />
 
-            </Container>
-            {click ? <Intro click={click} /> : null }
-        </MainContainer>
-    )
+      {/* Chrome — theme matches each half */}
+      <PowerButton />
+      <LogoComponent theme="dark" />
+      <SocialIcons theme="dark" />
+
+      {/* WORK — left, rotated, white */}
+      <WORK to="/work">
+        <motion.h2 {...spring(-200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+          Work
+        </motion.h2>
+      </WORK>
+
+      {/* SKILLS — right, rotated, dark */}
+      <SKILLS to="/skills">
+        <motion.h2 {...spring(-200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+          Skills
+        </motion.h2>
+      </SKILLS>
+
+      {/* Yin-yang spinner */}
+      <CenterBtn click={click} onClick={() => setClick(v => !v)}>
+        <SpinWrap>
+          <YinYang
+            width={click ? 120 : 200}
+            height={click ? 120 : 200}
+            fill={click ? 'rgba(20,15,50,0.75)' : 'rgba(167,139,250,0.85)'}
+          />
+        </SpinWrap>
+        <ClickHint hide={click}>click here</ClickHint>
+      </CenterBtn>
+
+      {/* Bottom nav */}
+      <BottomBar>
+        <ABOUT to="/about">
+          <motion.h2 {...spring(200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+            About.
+          </motion.h2>
+        </ABOUT>
+        <EXPERIENCE to="/experience">
+          <motion.h2 {...spring(200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+            Experience.
+          </motion.h2>
+        </EXPERIENCE>
+      </BottomBar>
+
+      {/* Intro panel */}
+      {click && <Intro click={click} />}
+    </MainContainer>
+  )
 }
 
 export default Main
