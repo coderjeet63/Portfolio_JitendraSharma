@@ -77,7 +77,7 @@ const SideLink = styled(NavLink)`
 // "Work" — left edge, vertical, white text
 const WORK = styled(SideLink)`
   top: 45%;
-  left: calc(1rem + 1vw);
+  left: calc(2rem + 1vw);
   transform: translate(-50%, -50%) rotate(-90deg);
   color: rgba(255,255,255,0.85);
 
