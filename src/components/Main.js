@@ -1,6 +1,5 @@
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import React, { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
 import styled, { keyframes } from 'styled-components'
 import LogoComponent from '../subComponents/LogoComponent'
 import PowerButton from '../subComponents/PowerButton'
@@ -82,7 +81,7 @@ const GridOverlay = styled.div`
 `
 
 // ── Side rotated nav labels — exact positions from screenshot ─────────
-const SideLink = styled(NavLink)`
+const SideLink = styled.a`
   position: absolute;
   text-decoration: none;
   font-family: 'Syne', sans-serif;
@@ -139,7 +138,7 @@ const BottomBar = styled.div`
 `
 
 // About = left side = white text
-const ABOUT = styled(NavLink)`
+const ABOUT = styled.a`
   color: rgba(255,255,255,0.55);
   text-decoration: none;
   font-family: 'Syne', sans-serif;
@@ -155,7 +154,7 @@ const ABOUT = styled(NavLink)`
 `
 
 // Experience = right side = dark text
-const EXPERIENCE = styled(NavLink)`
+const EXPERIENCE = styled.a`
   color: rgba(30,20,60,0.45);
   text-decoration: none;
   font-family: 'Syne', sans-serif;
@@ -273,7 +272,7 @@ const TopBarIcons = styled.div`
   gap: 0.6rem;
 `
 
-const TopBarLinkBtn = styled(NavLink)`
+const TopBarLinkBtn = styled.a`
   background: rgba(124,111,255,0.1);
   border: 1px solid rgba(124,111,255,0.2);
   border-radius: 8px;
@@ -512,7 +511,7 @@ const MNavSection = styled.div`
   padding: 0.5rem 0 1.5rem;
 `
 
-const MNavLink = styled(NavLink)`
+const MNavLink = styled.a`
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -561,9 +560,48 @@ const MNavNum = styled.span`
   flex-shrink: 0;
 `
 
+const SectionStack = styled.div`
+  position: relative;
+  z-index: 1;
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+`
+
+const SectionBlock = styled.section`
+  min-height: 100vh;
+  padding: 6rem 2rem 4rem;
+  background: ${p => p.dark ? '#07091a' : 'linear-gradient(160deg, #f5eef8 0%, #e8f4fb 60%, #dff0ff 100%)'};
+  color: ${p => p.dark ? 'rgba(240,239,248,0.9)' : '#1a1a2e'};
+  border-top: 1px solid ${p => p.dark ? 'rgba(124,111,255,0.15)' : 'rgba(124,111,255,0.1)'};
+
+  h2 {
+    margin: 0 0 1rem;
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+  }
+
+  p {
+    margin: 0;
+    max-width: 900px;
+    font-family: 'Karla', sans-serif;
+    line-height: 1.8;
+    color: ${p => p.dark ? 'rgba(240,239,248,0.65)' : 'rgba(26,26,46,0.72)'};
+  }
+
+  @media (max-width: 768px) {
+    min-height: auto;
+    padding: 4rem 1.25rem 3rem;
+  }
+`
+
 // ── Component ─────────────────────────────────────────────────────────
 const Main = () => {
   const [click, setClick] = useState(true)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const cx = useMotionValue(-100)
   const cy = useMotionValue(-100)
@@ -591,14 +629,15 @@ const Main = () => {
   const iconFill = DarkTheme.text
 
   const navItems = [
-    { to: '/about',      label: 'About.',      num: '01' },
-    { to: '/experience', label: 'Experience.', num: '02' },
-    { to: '/work',       label: 'Work.',       num: '03' },
-    { to: '/skills',     label: 'Skills.',     num: '04' },
+    { href: '#about',      label: 'About.',      num: '01' },
+    { href: '#experience', label: 'Experience.', num: '02' },
+    { href: '#work',       label: 'Work.',       num: '03' },
+    { href: '#skills',     label: 'Skills.',     num: '04' },
   ]
 
   return (
-    <MainContainer>
+    <>
+    <MainContainer id="home">
       {/* Background layers */}
       <LeftGlow />
       <GridOverlay />
@@ -613,14 +652,14 @@ const Main = () => {
       <SocialIcons theme="dark" />
 
       {/* WORK — left, rotated, white */}
-      <WORK to="/work">
+      <WORK href="#work">
         <motion.h2 {...spring(-200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
           Work
         </motion.h2>
       </WORK>
 
       {/* SKILLS — right, rotated, dark */}
-      <SKILLS to="/skills">
+      <SKILLS href="#skills">
         <motion.h2 {...spring(-200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
           Skills
         </motion.h2>
@@ -640,12 +679,12 @@ const Main = () => {
 
       {/* Bottom nav */}
       <BottomBar>
-        <ABOUT to="/about">
+        <ABOUT href="#about">
           <motion.h2 {...spring(200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
             About.
           </motion.h2>
         </ABOUT>
-        <EXPERIENCE to="/experience">
+        <EXPERIENCE href="#experience">
           <motion.h2 {...spring(200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
             Experience.
           </motion.h2>
@@ -660,7 +699,7 @@ const Main = () => {
         <MobileTopBar>
           <TopBarLogo>JS</TopBarLogo>
           <TopBarIcons>
-            <TopBarLinkBtn to="/" aria-label="Power">
+            <TopBarLinkBtn href="#home" aria-label="Power">
               <PowerBtn width={16} height={16} fill="rgba(240,239,248,0.85)" />
             </TopBarLinkBtn>
             <TopBarIconBtn onClick={() => setClick(v => !v)} aria-label="Toggle">
@@ -668,7 +707,7 @@ const Main = () => {
                 <YinYang width={18} height={18} fill="rgba(167,139,250,0.9)" />
               </SpinWrapSm>
             </TopBarIconBtn>
-            <TopBarIconBtn aria-label="Menu">
+            <TopBarIconBtn aria-label="Menu" onClick={() => setMobileMenuOpen(v => !v)}>
               <Burger><span /></Burger>
             </TopBarIconBtn>
           </TopBarIcons>
@@ -734,17 +773,54 @@ const Main = () => {
           </MYinYangWrap>
         </MLightSection>
 
+        {mobileMenuOpen && (
         <MNavSection>
-          {navItems.map(({ to, label, num }) => (
-            <MNavLink key={to} to={to}>
+          {navItems.map(({ href, label, num }) => (
+            <MNavLink
+              key={href}
+              href={href}
+              onClick={() => setMobileMenuOpen(false)}
+            >
               <MNavNum>{num}</MNavNum>
               {label}
               <MNavArrow>→</MNavArrow>
             </MNavLink>
           ))}
         </MNavSection>
+        )}
       </MobileLayout>
     </MainContainer>
+    <SectionStack>
+      <SectionBlock id="about" dark>
+        <h2>About</h2>
+        <p>
+          Full-stack engineer focused on scalable systems, fast user experiences, and clean architecture.
+          I design and build production apps with a strong focus on performance, maintainability, and business impact.
+        </p>
+      </SectionBlock>
+      <SectionBlock id="experience">
+        <h2>Experience</h2>
+        <p>
+          Experienced across backend APIs, real-time systems, cloud deployment, and modern frontend interfaces.
+          I work end-to-end—from system design to deployment and optimization—while keeping DX and UX aligned.
+        </p>
+      </SectionBlock>
+      <SectionBlock id="work" dark>
+        <h2>Work</h2>
+        <p>
+          Delivered portfolio projects spanning full-stack web apps, AI-assisted features, and interactive UI systems.
+          My work emphasizes reliability, measurable outcomes, and polished product execution.
+        </p>
+      </SectionBlock>
+      <SectionBlock id="skills">
+        <h2>Skills</h2>
+        <p>
+          React, Node.js, Express, MongoDB, Redis, REST APIs, and modern animation and design tooling.
+          Comfortable owning architecture decisions and implementing features across the complete application lifecycle.
+        </p>
+      </SectionBlock>
+    </SectionStack>
+    </>
   )
 }
 
