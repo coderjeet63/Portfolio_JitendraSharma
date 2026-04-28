@@ -15,7 +15,7 @@ transform: translate(-50%, 0);
 background-color: #FCF6F4;
 padding: 0.3rem;
 border-radius: 50%;
-border: 1px solid #000;
+border: 1px solid rgba(255,255,255,0.10);
 width: 2.5rem;
 height: 2.5rem;
 
@@ -27,8 +27,8 @@ z-index:3;
 cursor: pointer;
 
 &:hover{
-    background-color: rgba(0,255,0,0.4);
-    box-shadow: 0 0 8px 6px rgba(0,255,0,0.2);
+    background-color: rgba(124,111,255,0.12);
+    box-shadow: 0 0 10px 6px rgba(124,111,255,0.5);
 }
 
 &>*:first-child{

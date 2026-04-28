@@ -127,7 +127,7 @@ const Dot = styled.div`
   height: 16px;
   border-radius: 50%;
   background: linear-gradient(135deg, #7c6fff, #00e5c3);
-  border: 3px solid #000;
+  border: 3px solid rgba(255, 255, 255, 0.10);
   animation: ${glow} 3s ease-in-out infinite;
   z-index: 2;
 `;

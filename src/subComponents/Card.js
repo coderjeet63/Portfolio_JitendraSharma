@@ -9,21 +9,35 @@ import { Github } from '../components/AllSvgs';
 const Box = styled(motion.li)`
 width: 16rem;
 height: 40vh;
-background-color: ${props => props.theme.text};
-color:${props => props.theme.body};
+background: rgba(255,255,255,0.05);
+border: 1px solid rgba(255,255,255,0.10);
+backdrop-filter: blur(16px);
+color:${props => props.theme.text};
 padding: 1.5rem 2rem;
 margin-right: 8rem;
 border-radius: 0 50px 0 50px;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
-border: 1px solid ${props => props.theme.body};
 transition: all 0.2s ease;
 
+position: relative;
+overflow: hidden;
+
+&::before{
+  content:"";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #7C6FFF, #00E5C3);
+  opacity: 0.9;
+}
+
 &:hover{
-background-color: ${props => props.theme.body};
-color:${props => props.theme.text};
-border: 1px solid ${props => props.theme.text};
+border-color: rgba(124,111,255,0.35);
+box-shadow: 0 0 40px rgba(124,111,255,0.25);
 
 }
 `
@@ -37,12 +51,12 @@ font-family: 'Karla',sans-serif;
 font-weight: 500;
 `
 const Tags = styled.div`
-border-top: 2px solid ${props =>props.theme.body};
+border-top: 1px solid rgba(255,255,255,0.10);
 padding-top: 0.5rem;
 display:flex;
 flex-wrap:wrap;
 ${Box}:hover &{
-border-top: 2px solid ${props =>props.theme.text};
+border-top: 1px solid rgba(124,111,255,0.35);
 }
 `
 const Tag = styled.span`
@@ -56,7 +70,9 @@ justify-content: space-between;
 `
 
 const Link = styled.a`
-background-color: ${props =>props.theme.body};
+background: rgba(255,255,255,0.06);
+border: 1px solid rgba(255,255,255,0.10);
+backdrop-filter: blur(16px);
 color: ${props =>props.theme.text};
 text-decoration: none;
 padding:0.5rem calc(2rem + 2vw);
@@ -64,8 +80,8 @@ border-radius: 0 0 0 50px;
 font-size:calc(1em + 0.5vw);
 
 ${Box}:hover &{
-    background-color: ${props =>props.theme.text};
-    color: ${props =>props.theme.body};
+    border-color: rgba(124,111,255,0.35);
+    box-shadow: 0 0 24px rgba(124,111,255,0.18);
 
 }
 `

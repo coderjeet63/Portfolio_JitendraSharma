@@ -7,8 +7,13 @@ import { DarkTheme } from '../components/Themes'
 
 const Logo = styled.h1`
 display: inline-block;
-color: ${props => props.color === 'dark' ? DarkTheme.text : DarkTheme.body};
-font-family: 'Pacifico',cursive;
+background: linear-gradient(90deg, #7C6FFF, #00E5C3);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+color: transparent;
+font-family: 'Syne', sans-serif;
+font-weight: 800;
 
 position: fixed;
 left: 2rem;
