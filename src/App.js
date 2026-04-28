@@ -9,6 +9,7 @@ import Main from "./components/Main";
 import AboutPage from "./components/AboutPage";
 import WorkPage from "./components/WorkPage";
 import MySkillsPage from "./components/MySkillsPage";
+import ExperiencePage from "./components/ExperiencePage";
 import SoundBar from "./subComponents/SoundBar";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
             <Route path="/work" element={<WorkPage />} />
 
             <Route path="/skills" element={<MySkillsPage />} />
+            <Route path="/experience" element={<ExperiencePage />} />
             {/* Below is to catch all the other routes and send the user to main component,
 you can add custom 404 component or message instead of Main component*/}
             <Route path="*" element={<Main />} />

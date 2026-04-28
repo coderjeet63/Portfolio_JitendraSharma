@@ -60,7 +60,7 @@ justify-content: space-evenly;
 `
 
 const ABOUT = styled(NavLink)`
-  color: ${(props) => (props.click ? '#808080' : '#808080')}; /* gold color for visibility */
+  color: ${(props) => (props.click ? '#808080' : '#808080')};
   text-decoration: underline;
   z-index: 1;
   font-size: 2rem;
@@ -68,6 +68,18 @@ const ABOUT = styled(NavLink)`
 
   &:hover {
     color: orange;
+  }
+`
+
+const EXPERIENCE = styled(NavLink)`
+  color: ${(props) => (props.click ? '#808080' : '#808080')};
+  text-decoration: underline;
+  z-index: 1;
+  font-size: 2rem;
+  font-weight: bold;
+
+  &:hover {
+    color: #00e5c3;
   }
 `
 
@@ -168,6 +180,16 @@ const Main = () => {
                     About.
                 </motion.h2>
             </ABOUT>
+            <EXPERIENCE to="/experience" click={+click}>
+                <motion.h2
+                initial={{ y:200, transition: { type:'spring', duration: 1.5, delay:1} }}
+                animate={{ y:0, transition: { type:'spring', duration: 1.5, delay:1} }}
+                whileHover={{scale: 1.1}}
+                whileTap={{scale: 0.9}}
+                >
+                    Experience.
+                </motion.h2>
+            </EXPERIENCE>
             </BottomBar>
 
             </Container>
