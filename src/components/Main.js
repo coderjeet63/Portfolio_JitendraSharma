@@ -458,7 +458,7 @@ const MSocialLabel = styled.span`
 `
 
 const MLightSection = styled.div`
-  background: linear-gradient(160deg, #f5eef8 0%, #e8f4fb 60%, #dff0ff 100%);
+  background: #07091a;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -720,11 +720,7 @@ const Main = () => {
             >
               <PowerBtn width={16} height={16} fill="rgba(240,239,248,0.85)" />
             </TopBarLinkBtn>
-            <TopBarIconBtn onClick={() => setClick(v => !v)} aria-label="Toggle">
-              <SpinWrapSm>
-                <YinYang width={18} height={18} fill="rgba(167,139,250,0.9)" />
-              </SpinWrapSm>
-            </TopBarIconBtn>
+
             <TopBarIconBtn aria-label="Menu" onClick={() => setMobileMenuOpen(v => !v)}>
               <Burger><span /></Burger>
             </TopBarIconBtn>
@@ -784,11 +780,7 @@ const Main = () => {
             />
           </MAvatarWrap>
 
-          <MYinYangWrap>
-            <MYinYangSpin>
-              <YinYang width={44} height={44} fill="rgba(100,80,200,0.45)" />
-            </MYinYangSpin>
-          </MYinYangWrap>
+
         </MLightSection>
 
         <AnimatePresence>

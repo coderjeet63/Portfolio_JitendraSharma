@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled, { ThemeProvider, keyframes } from 'styled-components'
-import { lightTheme } from './Themes'
+import { DarkTheme } from './Themes'
 import { motion, AnimatePresence } from 'framer-motion'
 import LogoComponent from '../subComponents/LogoComponent'
 import SocialIcons from '../subComponents/SocialIcons'
@@ -65,7 +65,7 @@ const fillBar = keyframes`
 
 // ── Styled
 const Box = styled.div`
-  background: #FAFAF9;
+  background: #060612;
   width: 100vw;
   min-height: 100vh;
   position: relative;
@@ -75,9 +75,10 @@ const Box = styled.div`
     content: '';
     position: fixed; inset: 0;
     background-image:
-      linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
-    background-size: 40px 40px;
+      linear-gradient(rgba(124,111,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,111,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: ${gridAnim} 10s linear infinite;
     pointer-events: none;
     z-index: 0;
   }
@@ -111,7 +112,7 @@ const Title = styled.h1`
   font-family: 'Syne', sans-serif;
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 800;
-  color: #0A0A0F;
+  color: #fff;
   line-height: 1.1;
 
   span {
@@ -139,9 +140,9 @@ const TabRow = styled.div`
 const Tab = styled.button`
   padding: 8px 20px;
   border-radius: 100px;
-  border: 1.5px solid ${p => p.active ? p.color : 'rgba(0,0,0,0.1)'};
+  border: 1.5px solid ${p => p.active ? p.color : 'rgba(255,255,255,0.1)'};
   background: ${p => p.active ? `${p.color}18` : 'transparent'};
-  color: ${p => p.active ? p.color : 'rgba(0,0,0,0.45)'};
+  color: ${p => p.active ? p.color : 'rgba(255,255,255,0.45)'};
   font-family: 'Syne', sans-serif;
   font-size: 0.82rem;
   font-weight: 700;
@@ -163,8 +164,8 @@ const SkillGrid = styled(motion.div)`
 `
 
 const SkillCard = styled(motion.div)`
-  background: rgba(255,255,255,0.9);
-  border: 1.5px solid rgba(0,0,0,0.07);
+  background: rgba(255,255,255,0.03);
+  border: 1.5px solid rgba(255,255,255,0.08);
   border-radius: 20px;
   padding: 1.5rem;
   backdrop-filter: blur(10px);
@@ -188,7 +189,7 @@ const SkillName = styled.span`
   font-family: 'Karla', sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #1a1a2e;
+  color: #fff;
 `
 
 const SkillLevel = styled.span`
@@ -200,7 +201,7 @@ const SkillLevel = styled.span`
 
 const BarTrack = styled.div`
   height: 6px;
-  background: rgba(0,0,0,0.06);
+  background: rgba(255,255,255,0.06);
   border-radius: 100px;
   overflow: hidden;
 `
@@ -223,7 +224,7 @@ const BigBg = styled.div`
     position: absolute;
   }
   font-weight: 900;
-  color: rgba(0,0,0,0.03);
+  color: rgba(255,255,255,0.02);
   user-select: none;
   pointer-events: none;
   z-index: 0;
@@ -234,12 +235,12 @@ const MySkillsPage = () => {
   const current = skills[activeTab]
 
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={DarkTheme}>
       <Box>
-        <LogoComponent theme="light" />
-        <SocialIcons theme="light" />
+        <LogoComponent theme="dark" />
+        <SocialIcons theme="dark" />
         <PowerButton />
-        <ParticleComponent theme="light" />
+        <ParticleComponent theme="dark" />
 
         <ContentWrap>
           <Header
