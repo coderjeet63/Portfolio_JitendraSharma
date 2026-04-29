@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useSpring } from 'framer-motion'
+import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion'
 import React, { useState, useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { NavLink } from 'react-router-dom'
@@ -519,7 +519,7 @@ const MYinYangSpin = styled.div`
   animation: ${rotateAnim} 8s linear infinite;
 `
 
-const MNavSection = styled.div`
+const MNavSection = styled(motion.div)`
   position: fixed;
   top: 0; left: 0;
   width: 100vw;
@@ -533,7 +533,31 @@ const MNavSection = styled.div`
   gap: 2.5rem;
 `
 
-const MNavLink = styled.a`
+const MCloseBtn = styled.button`
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: transparent;
+  border: 1px solid rgba(124,111,255,0.3);
+  border-radius: 50px;
+  padding: 0.6rem 1.5rem;
+  color: rgba(255,255,255,0.75);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  z-index: 10002;
+  transition: all 0.2s ease;
+  
+  &:active {
+    background: rgba(124,111,255,0.15);
+    color: #a78bfa;
+  }
+`
+
+const MNavLink = styled(motion.a)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -767,21 +791,35 @@ const Main = () => {
           </MYinYangWrap>
         </MLightSection>
 
-        {mobileMenuOpen && (
-        <MNavSection>
-          {navItems.map(({ href, label, num }) => (
-            <MNavLink
-              key={href}
-              href={href}
-              onClick={() => setMobileMenuOpen(false)}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <MNavSection
+              initial={{ y: '-100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '-100%', transition: { delay: 0.1, duration: 0.4 } }}
+              transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
             >
-              <MNavNum>{num}</MNavNum>
-              {label}
-              <MNavArrow>→</MNavArrow>
-            </MNavLink>
-          ))}
-        </MNavSection>
-        )}
+              <MCloseBtn onClick={() => setMobileMenuOpen(false)}>
+                ✕ Close
+              </MCloseBtn>
+              {navItems.map(({ href, label, num }, i) => (
+                <MNavLink
+                  key={href}
+                  href={href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
+                  transition={{ delay: 0.2 + (i * 0.1), duration: 0.5, ease: 'easeOut' }}
+                >
+                  <MNavNum>{num}</MNavNum>
+                  {label}
+                  <MNavArrow>→</MNavArrow>
+                </MNavLink>
+              ))}
+            </MNavSection>
+          )}
+        </AnimatePresence>
       </MobileLayout>
 
       <MobileContentWrapper>
