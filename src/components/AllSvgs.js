@@ -195,3 +195,18 @@ export const Develope = (props) => {
   )
 
 }
+
+export const GFG = (props) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 50 50"
+      width={props.width || 30}
+      height={props.height || 30}
+      {...props}
+    >
+      <path fill={props.fill || "currentColor"} d="M 15 35.8 c -6 -0.1 -10.8 -5 -10.8 -10.9 c 0 -6 4.9 -10.9 10.9 -10.9 c 3.9 0 7.3 2.1 9.2 5.2 L 19 22 c -1.2 -1.9 -3.4 -3.1 -5.9 -3.1 c -3.9 0 -7 3.1 -7 7 s 3.1 7 7 7 c 2 0 3.8 -0.8 5.1 -2.1 v -2.1 h -5.5 v -3.8 h 9.6 v 7.1 C 20.4 34.3 17.8 35.8 15 35.8 Z M 35 35.8 c -2.8 0 -5.4 -1.5 -7.3 -3.8 v -7.1 h 9.6 v 3.8 h -5.5 v 2.1 c 1.3 1.3 3.1 2.1 5.1 2.1 c 3.9 0 7 -3.1 7 -7 s -3.1 -7 -7 -7 c -2.5 0 -4.7 1.2 -5.9 3.1 l -5.3 -2.8 c 1.9 -3.1 5.3 -5.2 9.2 -5.2 c 6 0 10.9 4.9 10.9 10.9 C 45.9 30.8 41 35.7 35 35.8 Z" />
+      <rect fill={props.fill || "currentColor"} x="23" y="24" width="4" height="2" />
+    </svg>
+  );
+};

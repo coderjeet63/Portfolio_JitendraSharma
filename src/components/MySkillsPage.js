@@ -3,7 +3,6 @@ import styled, { ThemeProvider, keyframes } from 'styled-components'
 import { DarkTheme } from './Themes'
 import { motion, AnimatePresence } from 'framer-motion'
 import LogoComponent from '../subComponents/LogoComponent'
-import SocialIcons from '../subComponents/SocialIcons'
 import PowerButton from '../subComponents/PowerButton'
 import ParticleComponent from '../subComponents/ParticleComponent'
 
@@ -12,44 +11,44 @@ const skills = {
     icon: '⚡',
     color: '#7C6FFF',
     items: [
-      { name: 'React.js', level: 92 },
-      { name: 'Tailwind CSS', level: 88 },
-      { name: 'Framer Motion', level: 80 },
-      { name: 'Redux / Zustand', level: 78 },
-      { name: 'HTML & CSS', level: 95 },
+      { name: 'React.js & Redux Toolkit', level: 92 },
+      { name: 'Tailwind CSS & UI Design', level: 90 },
+      { name: 'Component Architecture', level: 88 },
+      { name: 'REST API Integration', level: 90 },
+      { name: 'Framer Motion (Animations)', level: 85 },
     ],
   },
   'Backend': {
     icon: '🔧',
     color: '#00E5C3',
     items: [
-      { name: 'Node.js', level: 88 },
-      { name: 'Express.js', level: 85 },
-      { name: 'MongoDB', level: 83 },
-      { name: 'REST APIs', level: 90 },
-      { name: 'JWT / Auth', level: 82 },
+      { name: 'Node.js & Express.js', level: 92 },
+      { name: 'MongoDB & Aggregations', level: 88 },
+      { name: 'Redis Pub/Sub & Caching', level: 85 },
+      { name: 'Socket.IO (Real-time)', level: 88 },
+      { name: 'API Design & RBAC Auth', level: 90 },
     ],
   },
-  'AI & Tools': {
-    icon: '🤖',
+  'AI & Fundamentals': {
+    icon: '🧠',
     color: '#FF6B9D',
     items: [
-      { name: 'OpenAI API', level: 78 },
-      { name: 'Gemini API', level: 75 },
-      { name: 'Web Speech API', level: 72 },
-      { name: 'Git & GitHub', level: 90 },
-      { name: 'Postman', level: 85 },
+      { name: 'Data Structures & Algorithms', level: 88 },
+      { name: 'Gemini AI & WebContainers', level: 85 },
+      { name: 'System Architecture & OOP', level: 85 },
+      { name: 'Core Java & C', level: 80 },
+      { name: 'Query Optimization', level: 85 },
     ],
   },
-  'DevOps': {
+  'DevOps & Tools': {
     icon: '🚀',
     color: '#F59E0B',
     items: [
-      { name: 'Vercel / Netlify', level: 85 },
-      { name: 'Render', level: 82 },
-      { name: 'GitHub Actions', level: 68 },
-      { name: 'Firebase', level: 72 },
-      { name: 'MongoDB Atlas', level: 80 },
+      { name: 'Git, GitHub & CI/CD', level: 90 },
+      { name: 'Docker & Containerization', level: 75 },
+      { name: 'Stripe API & Cloudinary', level: 82 },
+      { name: 'MongoDB Atlas & Render', level: 88 },
+      { name: 'Postman & Jest Testing', level: 85 },
     ],
   },
 }
@@ -58,9 +57,6 @@ const skills = {
 const gridAnim = keyframes`
   0%   { background-position: 0 0; }
   100% { background-position: 60px 60px; }
-`
-const fillBar = keyframes`
-  from { width: 0%; }
 `
 
 // ── Styled
@@ -238,7 +234,6 @@ const MySkillsPage = () => {
     <ThemeProvider theme={DarkTheme}>
       <Box>
         <LogoComponent theme="dark" />
-        <SocialIcons theme="dark" />
         <PowerButton />
         <ParticleComponent theme="dark" />
 

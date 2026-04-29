@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 import LogoComponent from '../subComponents/LogoComponent'
 import PowerButton from '../subComponents/PowerButton'
 import SocialIcons from '../subComponents/SocialIcons'
-import { Facebook, Github, PowerBtn, Twitter, YouTube, YinYang } from './AllSvgs'
+import { Facebook, Github, PowerBtn, YouTube, YinYang, GFG } from './AllSvgs'
 import Intro from './Intro'
 import { DarkTheme } from './Themes'
 import AboutPage from './AboutPage'
@@ -21,6 +21,19 @@ const rotateAnim = keyframes`
 const floatMobile = keyframes`
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-10px); }
+`
+
+const glowPulse = keyframes`
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.08); }
+`
+
+
+
+const tagPop = keyframes`
+  0%   { opacity: 0; transform: scale(0.7) translateY(8px); }
+  60%  { transform: scale(1.06) translateY(-2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
 `
 
 // ── Root: two-tone split exactly like the screenshot ──────────────────
@@ -318,12 +331,7 @@ const TopBarIconBtn = styled.button`
   &:active { background: rgba(124,111,255,0.22); }
 `
 
-const SpinWrapSm = styled.div`
-  animation: ${rotateAnim} 4s linear infinite;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
+
 
 const Burger = styled.span`
   width: 16px;
@@ -415,13 +423,24 @@ const MTagRow = styled(motion.div)`
 `
 
 const MTag = styled.span`
-  padding: 3px 10px;
+  padding: 4px 12px;
   border-radius: 100px;
-  font-size: 0.55rem;
+  font-size: 0.58rem;
   font-family: 'Ubuntu Mono', monospace;
-  border: 1px solid rgba(124,111,255,0.32);
-  color: rgba(167,139,250,0.82);
-  background: rgba(124,111,255,0.08);
+  border: 1px solid rgba(124,111,255,0.35);
+  color: rgba(167,139,250,0.9);
+  background: rgba(124,111,255,0.1);
+  animation: ${tagPop} 0.5s ease forwards;
+  animation-delay: calc(var(--i, 0) * 80ms);
+  opacity: 0;
+  transition: all 0.2s ease;
+  &:hover {
+    background: rgba(124,111,255,0.22);
+    border-color: rgba(167,139,250,0.6);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(124,111,255,0.25);
+  }
 `
 
 const MSocialRow = styled(motion.div)`
@@ -434,21 +453,34 @@ const MSocialRow = styled(motion.div)`
   gap: 0.75rem;
 `
 
-const MSocialLink = styled.a`
+const MSocialLink = styled(motion.a)`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
+  width: 2.4rem;
+  height: 2.4rem;
   border-radius: 50%;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(124,111,255,0.2);
-  transition: all 0.18s;
+  transition: background 0.25s cubic-bezier(0.34,1.56,0.64,1),
+              border-color 0.25s ease,
+              box-shadow 0.25s ease;
   flex-shrink: 0;
-  &:active { background: rgba(124,111,255,0.18); transform: scale(0.94); }
+  &:active {
+    background: rgba(124,111,255,0.25);
+    border-color: rgba(124,111,255,0.7);
+    transform: scale(0.9);
+    box-shadow: 0 0 16px rgba(124,111,255,0.5);
+  }
+  &:hover {
+    border-color: rgba(124,111,255,0.5);
+    background: rgba(124,111,255,0.12);
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 6px 20px rgba(124,111,255,0.3);
+  }
 `
 
-const MSocialLabel = styled.span`
+const MSocialLabel = styled(motion.span)`
   font-family: 'Ubuntu Mono', monospace;
   font-size: 0.52rem;
   letter-spacing: 0.18em;
@@ -471,23 +503,24 @@ const MLightSection = styled.div`
 const MBadge = styled(motion.div)`
   align-self: flex-end;
   margin-top: 1rem;
-  padding: 5px 14px;
+  padding: 6px 16px;
   border-radius: 100px;
-  background: rgba(0,229,195,0.12);
-  border: 1px solid rgba(0,229,195,0.35);
-  font-size: 0.52rem;
-  letter-spacing: 0.14em;
-  color: #00A887;
+  background: rgba(0,229,195,0.1);
+  border: 1px solid rgba(0,229,195,0.4);
+  font-size: 0.55rem;
+  letter-spacing: 0.16em;
+  color: #00E5C3;
   font-family: 'Ubuntu Mono', monospace;
   text-transform: uppercase;
+  box-shadow: 0 0 20px rgba(0,229,195,0.15);
 
   &::before {
     content: '●';
-    margin-right: 5px;
+    margin-right: 6px;
     color: #00E5C3;
-    animation: blink 1.6s ease-in-out infinite;
+    animation: blink 1.2s ease-in-out infinite;
   }
-  @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.2; } }
+  @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.15; } }
 `
 
 const MAvatarWrap = styled.div`
@@ -504,27 +537,60 @@ const MAvatar = styled(motion.img)`
   width: auto;
   object-fit: contain;
   object-position: bottom center;
-  animation: ${floatMobile} 5s ease-in-out infinite;
-  filter: drop-shadow(0 -4px 20px rgba(124,111,255,0.12));
+  animation: ${floatMobile} 4s ease-in-out infinite;
+  filter:
+    drop-shadow(0 -8px 30px rgba(124,111,255,0.35))
+    drop-shadow(0 0 60px rgba(0,229,195,0.15));
 `
 
-const MYinYangWrap = styled.div`
+const MAvatarGlow = styled.div`
   position: absolute;
-  bottom: 1rem;
-  right: 1.25rem;
-  opacity: 0.35;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 80px;
+  background: radial-gradient(ellipse, rgba(124,111,255,0.35), transparent 70%);
+  border-radius: 50%;
+  filter: blur(18px);
+  animation: ${glowPulse} 3s ease-in-out infinite;
+  pointer-events: none;
 `
 
-const MYinYangSpin = styled.div`
-  animation: ${rotateAnim} 8s linear infinite;
+const MAmbientOrb1 = styled.div`
+  position: absolute;
+  top: 10%;
+  left: -20%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(ellipse, rgba(124,111,255,0.12), transparent 70%);
+  border-radius: 50%;
+  filter: blur(30px);
+  pointer-events: none;
 `
+
+const MAmbientOrb2 = styled.div`
+  position: absolute;
+  bottom: 10%;
+  right: -10%;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(ellipse, rgba(0,229,195,0.1), transparent 70%);
+  border-radius: 50%;
+  filter: blur(24px);
+  pointer-events: none;
+`
+
+
 
 const MNavSection = styled(motion.div)`
   position: fixed;
   top: 0; left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #07091a !important;
+  background: radial-gradient(ellipse 80% 50% at 20% 30%, rgba(124,111,255,0.18), transparent 60%),
+              radial-gradient(ellipse 60% 40% at 80% 70%, rgba(0,229,195,0.10), transparent 60%),
+              #07091a;
   z-index: 10000;
   display: flex;
   flex-direction: column;
@@ -537,7 +603,7 @@ const MCloseBtn = styled.button`
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
-  background: transparent;
+  background: rgba(124,111,255,0.08);
   border: 1px solid rgba(124,111,255,0.3);
   border-radius: 50px;
   padding: 0.6rem 1.5rem;
@@ -549,11 +615,13 @@ const MCloseBtn = styled.button`
   letter-spacing: 1px;
   text-transform: uppercase;
   z-index: 10002;
-  transition: all 0.2s ease;
-  
+  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+
   &:active {
-    background: rgba(124,111,255,0.15);
+    background: rgba(124,111,255,0.25);
+    border-color: #a78bfa;
     color: #a78bfa;
+    transform: scale(0.95);
   }
 `
 
@@ -563,27 +631,34 @@ const MNavLink = styled(motion.a)`
   justify-content: center;
   text-decoration: none;
   font-family: 'Syne', sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 2.5rem;
-  color: rgba(255,255,255,0.85);
-  transition: all 0.2s ease;
+  background: linear-gradient(135deg, #fff 20%, #a78bfa 60%, #00E5C3 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.3s ease;
   letter-spacing: 2px;
   position: relative;
   overflow: hidden;
   width: 100%;
 
-  &::before {
+  &::after {
     content: '';
     position: absolute;
-    left: 0; top: 0; bottom: 0;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
     width: 0;
-    background: linear-gradient(90deg, rgba(124,111,255,0.15), transparent);
-    transition: width 0.25s ease;
+    height: 2px;
+    background: linear-gradient(90deg, #7C6FFF, #00E5C3);
+    border-radius: 2px;
+    transition: width 0.35s ease;
   }
 
-  &:active {
-    color: #a78bfa;
-    &::before { width: 100%; }
+  &:active::after {
+    width: 60%;
   }
 `
 
@@ -606,6 +681,16 @@ const MobileContentWrapper = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
+
+    & > .scroll-section {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    & > .scroll-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 `
 
@@ -625,9 +710,25 @@ const Main = () => {
     return () => window.removeEventListener('mousemove', move)
   }, [cx, cy])
 
+  useEffect(() => {
+    const sections = document.querySelectorAll('.scroll-section')
+    if (!sections.length) return
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible')
+          observer.unobserve(e.target)
+        }
+      }),
+      { threshold: 0.12 }
+    )
+    sections.forEach(s => observer.observe(s))
+    return () => observer.disconnect()
+  }, [])
+
   const spring = (from, delay) => ({
     initial: { y: from, opacity: 0 },
-    animate: { y: 0,    opacity: 1 },
+    animate: { y: 0, opacity: 1 },
     transition: { type: 'spring', duration: 1.5, delay },
   })
 
@@ -639,188 +740,210 @@ const Main = () => {
 
   const iconFill = DarkTheme.text
 
+  const socialIconVariants = {
+    hidden: { opacity: 0, x: -30 },
+    show: {
+      opacity: 1, x: 0,
+      transition: { type: 'spring', stiffness: 200, damping: 18 }
+    },
+  }
+
+  const socialContainerVariants = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.1, delayChildren: 0.85 } },
+  }
+
   const navItems = [
-    { href: '#about',      label: 'About',      num: '01' },
+    { href: '#about', label: 'About', num: '01' },
     { href: '#experience', label: 'Experience', num: '02' },
-    { href: '#work',       label: 'Work',       num: '03' },
-    { href: '#skills',     label: 'Skills',     num: '04' },
+    { href: '#work', label: 'Work', num: '03' },
+    { href: '#skills', label: 'Skills', num: '04' },
   ]
 
   return (
     <>
-    <MainContainer id="home">
-      {/* Background layers */}
-      <LeftGlow />
-      <GridOverlay />
+      <MainContainer id="home">
+        {/* Background layers */}
+        <LeftGlow />
+        <GridOverlay />
 
-      {/* Custom cursor */}
-      <CursorDot style={{ x: cx, y: cy }} />
-      <CursorRing style={{ x: rx, y: ry, translateX: '-11px', translateY: '-11px' }} />
+        {/* Custom cursor */}
+        <CursorDot style={{ x: cx, y: cy }} />
+        <CursorRing style={{ x: rx, y: ry, translateX: '-11px', translateY: '-11px' }} />
 
-      {/* Chrome — theme matches each half */}
-      <PowerButton />
-      <LogoComponent theme="dark" />
-      <SocialIcons theme="dark" />
+        {/* Chrome — theme matches each half */}
+        <PowerButton />
+        <LogoComponent theme="dark" />
+        <SocialIcons theme="dark" />
 
-      {/* WORK — left, rotated, white */}
-      <WORK to="/work">
-        <motion.h2 {...spring(-200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
-          Work
-        </motion.h2>
-      </WORK>
-
-      {/* SKILLS — right, rotated, dark */}
-      <SKILLS to="/skills">
-        <motion.h2 {...spring(-200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
-          Skills
-        </motion.h2>
-      </SKILLS>
-
-      {/* Yin-yang spinner */}
-      <CenterBtn click={click} onClick={() => setClick(v => !v)}>
-        <SpinWrap>
-          <YinYang
-            width={click ? 120 : 200}
-            height={click ? 120 : 200}
-            fill={click ? 'rgba(20,15,50,0.75)' : 'rgba(167,139,250,0.85)'}
-          />
-        </SpinWrap>
-        <ClickHint hide={click}>click here</ClickHint>
-      </CenterBtn>
-
-      {/* Bottom nav */}
-      <BottomBar>
-        <ABOUT to="/about">
-          <motion.h2 {...spring(200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
-            About.
+        {/* WORK — left, rotated, white */}
+        <WORK to="/work">
+          <motion.h2 {...spring(-200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+            Work
           </motion.h2>
-        </ABOUT>
-        <EXPERIENCE to="/experience">
-          <motion.h2 {...spring(200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
-            Experience.
+        </WORK>
+
+        {/* SKILLS — right, rotated, dark */}
+        <SKILLS to="/skills">
+          <motion.h2 {...spring(-200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+            Skills
           </motion.h2>
-        </EXPERIENCE>
-      </BottomBar>
+        </SKILLS>
 
-      {/* Intro panel */}
-      {click && <Intro click={click} />}
-
-      {/* Mobile hero layout */}
-      <MobileLayout>
-        <MobileTopBar>
-          <TopBarLogo>JS</TopBarLogo>
-          <TopBarIcons>
-            <TopBarLinkBtn 
-              href="#home" 
-              aria-label="Power"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-            >
-              <PowerBtn width={16} height={16} fill="rgba(240,239,248,0.85)" />
-            </TopBarLinkBtn>
-
-            <TopBarIconBtn aria-label="Menu" onClick={() => setMobileMenuOpen(v => !v)}>
-              <Burger><span /></Burger>
-            </TopBarIconBtn>
-          </TopBarIcons>
-        </MobileTopBar>
-
-        <MobileDarkSection>
-          <MobileAccentLine />
-          <MobileInner>
-            <MEyebrow {...fade(0.2)}>Full Stack Engineer</MEyebrow>
-            <MHello   {...fade(0.32)}>Hello,</MHello>
-            <MName    {...fade(0.42)}>I'm Jitendra Sharma.</MName>
-            <MBio     {...fade(0.52)}>
-              Architecting scalable, real-time applications. Passionate about
-              system design, high-performance backends, and flawless full-stack experiences.
-            </MBio>
-            <MTagRow  {...fade(0.65)}>
-              {['System Design', 'Node.js', 'Redis', 'React'].map(tag => (
-                <MTag key={tag}>{tag}</MTag>
-              ))}
-            </MTagRow>
-          </MobileInner>
-        </MobileDarkSection>
-
-        <MSocialRow {...fade(0.78)}>
-          <MSocialLink href="https://github.com/coderjeet63" target="_blank" rel="noreferrer">
-            <Github width={14} height={14} fill={iconFill} />
-          </MSocialLink>
-          <MSocialLink href="https://dashboard.render.com/" target="_blank" rel="noreferrer">
-            <Twitter width={14} height={14} fill={iconFill} />
-          </MSocialLink>
-          <MSocialLink href="https://www.linkedin.com/in/jitendra-sharma-553136284/" target="_blank" rel="noreferrer">
-            <Facebook width={14} height={14} fill={iconFill} />
-          </MSocialLink>
-          <MSocialLink href="mailto:jitendrasharma.developer@gmail.com" rel="noreferrer">
-            <YouTube width={14} height={14} fill={iconFill} />
-          </MSocialLink>
-          <MSocialLabel>Connect</MSocialLabel>
-        </MSocialRow>
-
-        <MLightSection>
-          <MBadge
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9 }}
-          >
-            Open to work
-          </MBadge>
-
-          <MAvatarWrap>
-            <MAvatar
-              src={require('../assets/Images/profile-img.png')}
-              alt="Jitendra Sharma"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.55, ease: 'easeOut' }}
+        {/* Yin-yang spinner */}
+        <CenterBtn click={click} onClick={() => setClick(v => !v)}>
+          <SpinWrap>
+            <YinYang
+              width={click ? 120 : 200}
+              height={click ? 120 : 200}
+              fill={click ? 'rgba(20,15,50,0.75)' : 'rgba(167,139,250,0.85)'}
             />
-          </MAvatarWrap>
+          </SpinWrap>
+          <ClickHint hide={click}>click here</ClickHint>
+        </CenterBtn>
 
+        {/* Bottom nav */}
+        <BottomBar>
+          <ABOUT to="/about">
+            <motion.h2 {...spring(200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+              About.
+            </motion.h2>
+          </ABOUT>
+          <EXPERIENCE to="/experience">
+            <motion.h2 {...spring(200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+              Experience.
+            </motion.h2>
+          </EXPERIENCE>
+        </BottomBar>
 
-        </MLightSection>
+        {/* Intro panel */}
+        {click && <Intro click={click} />}
 
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <MNavSection
-              initial={{ y: '-100%' }}
-              animate={{ y: 0 }}
-              exit={{ y: '-100%', transition: { delay: 0.1, duration: 0.4 } }}
-              transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
+        {/* Mobile hero layout */}
+        <MobileLayout>
+          <MobileTopBar>
+            <TopBarLogo>JS</TopBarLogo>
+            <TopBarIcons>
+              <TopBarLinkBtn
+                href="#home"
+                aria-label="Power"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              >
+                <PowerBtn width={16} height={16} fill="rgba(240,239,248,0.85)" />
+              </TopBarLinkBtn>
+
+              <TopBarIconBtn aria-label="Menu" onClick={() => setMobileMenuOpen(v => !v)}>
+                <Burger><span /></Burger>
+              </TopBarIconBtn>
+            </TopBarIcons>
+          </MobileTopBar>
+
+          <MobileDarkSection>
+            <MobileAccentLine />
+            <MobileInner>
+              <MEyebrow {...fade(0.2)}>Full Stack Engineer</MEyebrow>
+              <MHello   {...fade(0.32)}>Hello,</MHello>
+              <MName    {...fade(0.42)}>I'm Jitendra Sharma.</MName>
+              <MBio     {...fade(0.52)}>
+                Full-stack engineer focused on solid foundations — fast backends,
+                clean APIs, and UIs that hold up in production at scale.
+              </MBio>
+              <MTagRow  {...fade(0.65)}>
+                {['MERN Stack', 'Full Stack', 'DSA', 'Database', 'AI APIs', 'System Design'].map((tag, i) => (
+                  <MTag key={tag} style={{ '--i': i }}>{tag}</MTag>
+                ))}
+              </MTagRow>
+            </MobileInner>
+          </MobileDarkSection>
+
+          <MSocialRow
+            variants={socialContainerVariants}
+            initial="hidden"
+            animate="show"
+          >
+            <MSocialLink variants={socialIconVariants} href="https://github.com/coderjeet63" target="_blank" rel="noreferrer">
+              <Github width={14} height={14} fill={iconFill} />
+            </MSocialLink>
+            <MSocialLink variants={socialIconVariants} href="https://www.geeksforgeeks.org/profile/jitendrasharkiki?tab=activity" target="_blank" rel="noreferrer">
+              <GFG width={14} height={14} fill={iconFill} />
+            </MSocialLink>
+            <MSocialLink variants={socialIconVariants} href="https://www.linkedin.com/in/jitendra-sharma-553136284/" target="_blank" rel="noreferrer">
+              <Facebook width={14} height={14} fill={iconFill} />
+            </MSocialLink>
+            <MSocialLink variants={socialIconVariants} href="mailto:jitendrasharma.developer@gmail.com" rel="noreferrer">
+              <YouTube width={14} height={14} fill={iconFill} />
+            </MSocialLink>
+            <MSocialLabel
+              variants={{ hidden: { opacity: 0, x: -20 }, show: { opacity: 1, x: 0, transition: { delay: 0.25, duration: 0.5 } } }}
             >
-              <MCloseBtn onClick={() => setMobileMenuOpen(false)}>
-                ✕ Close
-              </MCloseBtn>
-              {navItems.map(({ href, label, num }, i) => (
-                <MNavLink
-                  key={href}
-                  href={href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
-                  transition={{ delay: 0.2 + (i * 0.1), duration: 0.5, ease: 'easeOut' }}
-                >
-                  <MNavNum>{num}</MNavNum>
-                  {label}
-                  <MNavArrow>→</MNavArrow>
-                </MNavLink>
-              ))}
-            </MNavSection>
-          )}
-        </AnimatePresence>
-      </MobileLayout>
+              Connect
+            </MSocialLabel>
+          </MSocialRow>
 
-      <MobileContentWrapper>
-        <div id="about"><AboutPage /></div>
-        <div id="experience"><ExperiencePage /></div>
-        <div id="work"><WorkPage /></div>
-        <div id="skills"><MySkillsPage /></div>
-      </MobileContentWrapper>
-    </MainContainer>
+          <MLightSection>
+            <MAmbientOrb1 />
+            <MAmbientOrb2 />
+            <MBadge
+              initial={{ opacity: 0, y: -12, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ delay: 0.9, type: 'spring', stiffness: 200 }}
+            >
+              Open to work
+            </MBadge>
+
+            <MAvatarWrap>
+              <MAvatar
+                src={require('../assets/Images/profile-img.png')}
+                alt="Jitendra Sharma"
+                initial={{ opacity: 0, y: 40, scale: 0.92 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 1.0, delay: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+              />
+            </MAvatarWrap>
+            <MAvatarGlow />
+          </MLightSection>
+
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <MNavSection
+                initial={{ y: '-100%' }}
+                animate={{ y: 0 }}
+                exit={{ y: '-100%', transition: { delay: 0.1, duration: 0.4 } }}
+                transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
+              >
+                <MCloseBtn onClick={() => setMobileMenuOpen(false)}>
+                  ✕ Close
+                </MCloseBtn>
+                {navItems.map(({ href, label, num }, i) => (
+                  <MNavLink
+                    key={href}
+                    href={href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
+                    transition={{ delay: 0.2 + (i * 0.1), duration: 0.5, ease: 'easeOut' }}
+                  >
+                    <MNavNum>{num}</MNavNum>
+                    {label}
+                    <MNavArrow>→</MNavArrow>
+                  </MNavLink>
+                ))}
+              </MNavSection>
+            )}
+          </AnimatePresence>
+        </MobileLayout>
+
+        <MobileContentWrapper>
+          <div id="about" className="scroll-section"><AboutPage /></div>
+          <div id="experience" className="scroll-section"><ExperiencePage /></div>
+          <div id="work" className="scroll-section"><WorkPage /></div>
+          <div id="skills" className="scroll-section"><MySkillsPage /></div>
+        </MobileContentWrapper>
+      </MainContainer>
     </>
   )
 }

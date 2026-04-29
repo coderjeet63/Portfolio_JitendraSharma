@@ -1,10 +1,9 @@
-import React, { useRef } from "react";
+import React from "react";
 import styled, { ThemeProvider, keyframes } from "styled-components";
 import { motion } from "framer-motion";
 import { DarkTheme } from "./Themes";
 
 import LogoComponent from "../subComponents/LogoComponent";
-import SocialIcons from "../subComponents/SocialIcons";
 import PowerButton from "../subComponents/PowerButton";
 import ParticleComponent from "../subComponents/ParticleComponent";
 import BigTitlte from "../subComponents/BigTitlte";
@@ -272,7 +271,6 @@ const ExperiencePage = () => {
     <ThemeProvider theme={DarkTheme}>
       <Box>
         <LogoComponent theme="dark" />
-        <SocialIcons theme="dark" />
         <PowerButton />
         <ParticleComponent theme="dark" />
 

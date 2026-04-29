@@ -3,7 +3,6 @@ import styled, { ThemeProvider, keyframes } from 'styled-components'
 import { DarkTheme } from './Themes'
 import { motion } from 'framer-motion'
 import LogoComponent from '../subComponents/LogoComponent'
-import SocialIcons from '../subComponents/SocialIcons'
 import PowerButton from '../subComponents/PowerButton'
 import ParticleComponent from '../subComponents/ParticleComponent'
 import astronaut from '../assets/Images/spaceman.png'
@@ -150,6 +149,34 @@ const StatCard = styled.div`
   }
 `
 
+const TagRow = styled(motion.div)`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 1.5rem 0 0.5rem;
+`
+
+const TagPill = styled.span`
+  padding: 5px 14px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-family: 'Ubuntu Mono', monospace;
+  border: 1px solid rgba(124,111,255,0.32);
+  color: rgba(167,139,250,0.85);
+  background: rgba(124,111,255,0.08);
+  letter-spacing: 0.06em;
+  transition: all 0.2s ease;
+  cursor: default;
+
+  &:hover {
+    background: rgba(124,111,255,0.18);
+    border-color: rgba(167,139,250,0.55);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(124,111,255,0.2);
+  }
+`
+
 const ResumeBtn = styled(motion.a)`
   display: inline-flex;
   align-items: center;
@@ -229,7 +256,6 @@ const AboutPage = () => (
   <ThemeProvider theme={DarkTheme}>
     <Box>
       <LogoComponent theme="dark" />
-      <SocialIcons theme="dark" />
       <PowerButton />
       <ParticleComponent theme="dark" />
 
@@ -242,31 +268,38 @@ const AboutPage = () => (
           <Divider {...fade(0.45)} />
 
           <Bio {...fade(0.55)}>
-            I'm a <strong style={{color:'rgba(167,139,250,0.9)'}}>MERN Stack Developer</strong> based
-            in India, passionate about building intelligent, real-time, and scalable web applications.
+            I'm a <strong style={{ color: 'rgba(167,139,250,0.9)' }}>Full-Stack Engineer</strong> specializing
+            in building high-performance, end-to-end web applications.
           </Bio>
           <Bio {...fade(0.65)}>
-            I've built multiple full-stack projects powered by modern technologies like React.js,
-            Node.js, Express, and MongoDB — many of which integrate AI APIs, voice features, and
-            real-time data flow.
+            I care deeply about the foundation — architecting solid backends, optimizing data flows,
+            and ensuring security — so that the frontend experience is lightning-fast and flawlessly
+            accessible. Whether it's a data-heavy dashboard or a highly interactive platform, my goal
+            is to build systems that scale gracefully.
           </Bio>
           <Bio {...fade(0.75)}>
-            My work focuses on performance, clean UI, and user-first experiences. I'm enthusiastic
-            about integrating OpenAI, Gemini, and real-time speech tools into everyday applications.
+            I value rock-solid reliability over hype. I believe in writing clean, maintainable code
+            and shipping production-ready products that deliver real value.
           </Bio>
+
+          <TagRow {...fade(0.85)}>
+            {['MERN Stack', 'Full Stack', 'DSA', 'Database', 'AI APIs', 'System Design'].map(tag => (
+              <TagPill key={tag}>{tag}</TagPill>
+            ))}
+          </TagRow>
 
           <HighlightRow {...fade(0.9)}>
             <StatCard>
-              <strong>8+</strong>
+              <strong>10+</strong>
               <span>Projects</span>
             </StatCard>
             <StatCard>
-              <strong>1+</strong>
-              <span>Years Exp</span>
+              <strong>0.5+</strong>
+              <span>Yrs Prod</span>
             </StatCard>
             <StatCard>
-              <strong>MERN</strong>
-              <span>Stack</span>
+              <strong>E2E</strong>
+              <span>Full Stack</span>
             </StatCard>
           </HighlightRow>
 

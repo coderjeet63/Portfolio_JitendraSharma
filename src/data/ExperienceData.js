@@ -12,6 +12,6 @@ export const Experiences = [
       "Architected secure user authentication workflows utilizing JWT and Role-Based Access Control (RBAC), enhancing application security.",
       "Collaborated in an Agile/Scrum environment, performing code reviews and maintaining version control via Git/GitHub.",
     ],
-    tags: ["React.js", "Node.js", "MongoDB", "Express", "JWT", "RBAC", "Git"],
+    tags: ["Schema Design", "Query Optimization", "Secure Authentication", "Scalable UIs", "RESTful Architecture", "Agile Workflows"],
   },
 ];

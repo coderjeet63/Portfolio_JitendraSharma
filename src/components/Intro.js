@@ -205,10 +205,10 @@ const Intro = () => (
       <Hello    {...t(1.25)}>Hello,</Hello>
       <NameLine {...t(1.4)}>I'm Jitendra Sharma.</NameLine>
       <Bio      {...t(1.55)}>
-        Architecting scalable, real-time applications. Passionate about system design, high-performance backends, and flawless full-stack experiences.
+        Full-stack engineer focused on solid foundations — fast backends, clean APIs, and UIs that hold up in production at scale.
       </Bio>
       <TagRow {...t(1.75)}>
-        {['System Design', 'Node.js', 'Redis', 'React'].map(tag => (
+        {['MERN Stack', 'Full Stack', 'DSA', 'Database', 'AI APIs', 'System Design'].map(tag => (
           <Tag key={tag}>{tag}</Tag>
         ))}
       </TagRow>
