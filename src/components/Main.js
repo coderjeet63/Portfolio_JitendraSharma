@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import React, { useState, useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
+import { NavLink } from 'react-router-dom'
 import LogoComponent from '../subComponents/LogoComponent'
 import PowerButton from '../subComponents/PowerButton'
 import SocialIcons from '../subComponents/SocialIcons'
@@ -85,7 +86,7 @@ const GridOverlay = styled.div`
 `
 
 // ── Side rotated nav labels — exact positions from screenshot ─────────
-const SideLink = styled.a`
+const SideLink = styled(NavLink)`
   position: absolute;
   text-decoration: none;
   font-family: 'Syne', sans-serif;
@@ -142,7 +143,7 @@ const BottomBar = styled.div`
 `
 
 // About = left side = white text
-const ABOUT = styled.a`
+const ABOUT = styled(NavLink)`
   color: rgba(255,255,255,0.55);
   text-decoration: none;
   font-family: 'Syne', sans-serif;
@@ -158,7 +159,7 @@ const ABOUT = styled.a`
 `
 
 // Experience = right side = dark text
-const EXPERIENCE = styled.a`
+const EXPERIENCE = styled(NavLink)`
   color: rgba(30,20,60,0.45);
   text-decoration: none;
   font-family: 'Syne', sans-serif;
@@ -628,14 +629,14 @@ const Main = () => {
       <SocialIcons theme="dark" />
 
       {/* WORK — left, rotated, white */}
-      <WORK href="#work">
+      <WORK to="/work">
         <motion.h2 {...spring(-200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
           Work
         </motion.h2>
       </WORK>
 
       {/* SKILLS — right, rotated, dark */}
-      <SKILLS href="#skills">
+      <SKILLS to="/skills">
         <motion.h2 {...spring(-200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
           Skills
         </motion.h2>
@@ -655,12 +656,12 @@ const Main = () => {
 
       {/* Bottom nav */}
       <BottomBar>
-        <ABOUT href="#about">
+        <ABOUT to="/about">
           <motion.h2 {...spring(200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
             About.
           </motion.h2>
         </ABOUT>
-        <EXPERIENCE href="#experience">
+        <EXPERIENCE to="/experience">
           <motion.h2 {...spring(200, 1)} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
             Experience.
           </motion.h2>

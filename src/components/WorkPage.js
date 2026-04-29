@@ -17,6 +17,7 @@ const Box = styled.div`
 
   height: 400vh;
   position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
 

@@ -69,8 +69,7 @@ const Box = styled.div`
   width: 100vw;
   min-height: 100vh;
   position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
 
   &::before {
     content: '';
@@ -219,6 +218,10 @@ const BigBg = styled.div`
   bottom: -2rem; right: -1rem;
   font-family: 'Syne', sans-serif;
   font-size: clamp(6rem, 15vw, 12rem);
+  
+  @media (max-width: 768px) {
+    position: absolute;
+  }
   font-weight: 900;
   color: rgba(0,0,0,0.03);
   user-select: none;

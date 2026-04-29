@@ -29,8 +29,7 @@ const Box = styled.div`
   width: 100vw;
   min-height: 100vh;
   position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
 `;
 
 const ContentWrapper = styled.div`
