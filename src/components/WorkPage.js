@@ -19,6 +19,13 @@ const Box = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+
+  @media (max-width: 768px) {
+    height: auto;
+    min-height: 100vh;
+    padding: 6rem 0;
+    align-items: flex-start;
+  }
 `;
 
 const Main = styled(motion.ul)`
@@ -29,6 +36,25 @@ const Main = styled(motion.ul)`
   display: flex;
 
   color: white;
+
+  @media (max-width: 768px) {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: auto;
+    flex-direction: column;
+    overflow-x: hidden;
+    gap: 2rem;
+    width: 100%;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    transform: none !important;
+
+    & > * {
+      width: 100%;
+      margin-right: 0;
+    }
+  }
 `;
 const Rotate = styled.span`
   display: block;

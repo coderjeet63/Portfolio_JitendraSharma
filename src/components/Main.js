@@ -7,6 +7,10 @@ import SocialIcons from '../subComponents/SocialIcons'
 import { Facebook, Github, PowerBtn, Twitter, YouTube, YinYang } from './AllSvgs'
 import Intro from './Intro'
 import { DarkTheme } from './Themes'
+import AboutPage from './AboutPage'
+import ExperiencePage from './ExperiencePage'
+import WorkPage from './WorkPage'
+import MySkillsPage from './MySkillsPage'
 
 const rotateAnim = keyframes`
   from { transform: rotate(0deg); }
@@ -560,41 +564,13 @@ const MNavNum = styled.span`
   flex-shrink: 0;
 `
 
-const SectionStack = styled.div`
-  position: relative;
-  z-index: 1;
+const MobileContentWrapper = styled.div`
   display: none;
 
   @media (max-width: 768px) {
-    display: block;
-  }
-`
-
-const SectionBlock = styled.section`
-  min-height: 100vh;
-  padding: 6rem 2rem 4rem;
-  background: ${p => p.dark ? '#07091a' : 'linear-gradient(160deg, #f5eef8 0%, #e8f4fb 60%, #dff0ff 100%)'};
-  color: ${p => p.dark ? 'rgba(240,239,248,0.9)' : '#1a1a2e'};
-  border-top: 1px solid ${p => p.dark ? 'rgba(124,111,255,0.15)' : 'rgba(124,111,255,0.1)'};
-
-  h2 {
-    margin: 0 0 1rem;
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    line-height: 1.1;
-  }
-
-  p {
-    margin: 0;
-    max-width: 900px;
-    font-family: 'Karla', sans-serif;
-    line-height: 1.8;
-    color: ${p => p.dark ? 'rgba(240,239,248,0.65)' : 'rgba(26,26,46,0.72)'};
-  }
-
-  @media (max-width: 768px) {
-    min-height: auto;
-    padding: 4rem 1.25rem 3rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
 `
 
@@ -789,37 +765,14 @@ const Main = () => {
         </MNavSection>
         )}
       </MobileLayout>
+
+      <MobileContentWrapper>
+        <div id="about"><AboutPage /></div>
+        <div id="experience"><ExperiencePage /></div>
+        <div id="work"><WorkPage /></div>
+        <div id="skills"><MySkillsPage /></div>
+      </MobileContentWrapper>
     </MainContainer>
-    <SectionStack>
-      <SectionBlock id="about" dark>
-        <h2>About</h2>
-        <p>
-          Full-stack engineer focused on scalable systems, fast user experiences, and clean architecture.
-          I design and build production apps with a strong focus on performance, maintainability, and business impact.
-        </p>
-      </SectionBlock>
-      <SectionBlock id="experience">
-        <h2>Experience</h2>
-        <p>
-          Experienced across backend APIs, real-time systems, cloud deployment, and modern frontend interfaces.
-          I work end-to-end—from system design to deployment and optimization—while keeping DX and UX aligned.
-        </p>
-      </SectionBlock>
-      <SectionBlock id="work" dark>
-        <h2>Work</h2>
-        <p>
-          Delivered portfolio projects spanning full-stack web apps, AI-assisted features, and interactive UI systems.
-          My work emphasizes reliability, measurable outcomes, and polished product execution.
-        </p>
-      </SectionBlock>
-      <SectionBlock id="skills">
-        <h2>Skills</h2>
-        <p>
-          React, Node.js, Express, MongoDB, Redis, REST APIs, and modern animation and design tooling.
-          Comfortable owning architecture decisions and implementing features across the complete application lifecycle.
-        </p>
-      </SectionBlock>
-    </SectionStack>
     </>
   )
 }
