@@ -32,6 +32,10 @@ color: inherit;
     background-color: rgba(124,111,255,0.12);
     box-shadow: 0 0 10px 6px rgba(124,111,255,0.5);
 }
+
+@media (max-width: 768px) {
+    display: none;
+}
 `
 
 const PowerButton = () => {

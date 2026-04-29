@@ -242,8 +242,9 @@ const MobileLayout = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
-    z-index: 2;
+    z-index: 9999;
     min-height: 100dvh;
+    padding-top: 80px;
   }
 `
 
@@ -252,11 +253,15 @@ const MobileTopBar = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0.9rem 1.25rem;
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 100;
-  background: rgba(7, 9, 26, 0.92);
-  backdrop-filter: blur(16px);
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 9999 !important;
+  background-color: #07091a !important;
+  backdrop-filter: none !important;
+  opacity: 1 !important;
   border-bottom: 1px solid rgba(124,111,255,0.12);
 `
 
@@ -291,6 +296,8 @@ const TopBarLinkBtn = styled.a`
   transition: background 0.2s;
   text-decoration: none;
   color: inherit;
+  pointer-events: auto;
+  z-index: 10001;
   &:active { background: rgba(124,111,255,0.22); }
 `
 
@@ -676,7 +683,14 @@ const Main = () => {
         <MobileTopBar>
           <TopBarLogo>JS</TopBarLogo>
           <TopBarIcons>
-            <TopBarLinkBtn href="#home" aria-label="Power">
+            <TopBarLinkBtn 
+              href="#home" 
+              aria-label="Power"
+              onClick={(e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            >
               <PowerBtn width={16} height={16} fill="rgba(240,239,248,0.85)" />
             </TopBarLinkBtn>
             <TopBarIconBtn onClick={() => setClick(v => !v)} aria-label="Toggle">
