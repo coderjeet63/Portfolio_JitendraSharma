@@ -313,6 +313,8 @@ const TopBarIconBtn = styled.button`
   cursor: pointer;
   padding: 0;
   transition: background 0.2s;
+  position: relative;
+  z-index: 10001;
   &:active { background: rgba(124,111,255,0.22); }
 `
 
@@ -518,26 +520,33 @@ const MYinYangSpin = styled.div`
 `
 
 const MNavSection = styled.div`
-  background: #07091a;
-  border-top: 1px solid rgba(124,111,255,0.12);
-  padding: 0.5rem 0 1.5rem;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #07091a !important;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
 `
 
 const MNavLink = styled.a`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  justify-content: center;
   text-decoration: none;
   font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: 1.4rem;
-  color: rgba(255,255,255,0.55);
-  padding: 0.9rem 1.25rem;
-  border-bottom: 1px solid rgba(124,111,255,0.07);
+  font-weight: 600;
+  font-size: 2.5rem;
+  color: rgba(255,255,255,0.85);
   transition: all 0.2s ease;
-  letter-spacing: 0.02em;
+  letter-spacing: 2px;
   position: relative;
   overflow: hidden;
+  width: 100%;
 
   &::before {
     content: '';
@@ -552,24 +561,18 @@ const MNavLink = styled.a`
     color: #a78bfa;
     &::before { width: 100%; }
   }
-
-  &:last-child { border-bottom: none; }
 `
 
 const MNavArrow = styled.span`
-  font-size: 0.8rem;
-  color: rgba(124,111,255,0.5);
-  margin-left: auto;
-  font-family: monospace;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 const MNavNum = styled.span`
-  font-family: 'Ubuntu Mono', monospace;
-  font-size: 0.55rem;
-  color: rgba(124,111,255,0.4);
-  letter-spacing: 0.1em;
-  width: 1.5rem;
-  flex-shrink: 0;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 const MobileContentWrapper = styled.div`
@@ -613,10 +616,10 @@ const Main = () => {
   const iconFill = DarkTheme.text
 
   const navItems = [
-    { href: '#about',      label: 'About.',      num: '01' },
-    { href: '#experience', label: 'Experience.', num: '02' },
-    { href: '#work',       label: 'Work.',       num: '03' },
-    { href: '#skills',     label: 'Skills.',     num: '04' },
+    { href: '#about',      label: 'About',      num: '01' },
+    { href: '#experience', label: 'Experience', num: '02' },
+    { href: '#work',       label: 'Work',       num: '03' },
+    { href: '#skills',     label: 'Skills',     num: '04' },
   ]
 
   return (
